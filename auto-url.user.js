@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Copper functions
+// @name         Copper pasted links formatter
 // @namespace    http://jfdelariosa.github.io/
 // @version      0.1
 // @run-at       document-end
-// @description  try to take over the world!
+// @description  Adds automatically format to pasted links on Copper CRM
 // @author       jfdelarosa
 // @match        https://app.prosperworks.com/*
 // @grant        GM_log
@@ -11,18 +11,17 @@
 
 (function() {
   "use strict";
-  var loaded = false;
-  GM_log("Copper helper functions!");
+  GM_log("http://jfdelariosa.github.io/");
   function isValidURL(str) {
     var pattern = new RegExp(
-      "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "^(https?:\\/\\/)?" +
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+        "((\\d{1,3}\\.){3}\\d{1,3}))" +
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+        "(\\?[;&a-z\\d%_.~+=-]*)?" +
         "(\\#[-a-z\\d_]*)?$",
       "i"
-    ); // fragment locator
+    );
     return !!pattern.test(str);
   }
 
