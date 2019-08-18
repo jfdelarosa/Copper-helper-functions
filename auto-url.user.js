@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Copper pasted links formatter
 // @namespace    http://jfdelariosa.github.io/
-// @version      0.1
+// @version      0.2
 // @run-at       document-end
 // @description  Adds automatically format to pasted links on Copper CRM
 // @author       jfdelarosa
@@ -11,7 +11,7 @@
 
 (function() {
   "use strict";
-  GM_log("http://jfdelariosa.github.io/");
+  GM_log("Created by http://jfdelarosa.github.io/");
   function isValidURL(str) {
     var pattern = new RegExp(
       "^(https?:\\/\\/)?" +
