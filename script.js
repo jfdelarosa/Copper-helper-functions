@@ -1,15 +1,18 @@
 // ==UserScript==
-// @name         New Userscript
-// @namespace    http://tampermonkey.net/
+// @name         Copper functions
+// @namespace    http://jfdelariosa.github.io/
 // @version      0.1
+// @run-at       document-end
 // @description  try to take over the world!
 // @author       jfdelarosa
-// @match        https://app.prosperworks.com/
-// @grant        none
+// @match        https://app.prosperworks.com/*
+// @grant        GM_log
 // ==/UserScript==
 
 (function() {
   "use strict";
+  var loaded = false;
+  GM_log("Copper helper functions!");
   function isValidURL(str) {
     var pattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
@@ -22,15 +25,31 @@
     ); // fragment locator
     return !!pattern.test(str);
   }
-  document.querySelectorAll(".TextArea").forEach(function(item) {
-    item.addEventListener("paste", function(event) {
-      event.preventDefault();
+
+  function init(event) {
+    function pasteHandler(item) {
       var link = event.clipboardData.getData("text/plain");
       var isURL = isValidURL(link);
       if (isURL) {
+        event.preventDefault();
         item.value += "[" + link + "](" + link + ")";
-        return false;
       }
-    });
-  });
+    }
+    var items = document.querySelectorAll("textarea.TextArea");
+    items.forEach(pasteHandler);
+  }
+
+  function addEventListeners() {
+    function onLoad() {
+      document.body.addEventListener("paste", function(event) {
+        var target = event.target ? event.target : event.srcElement;
+        if (target && target.nodeName.toLowerCase() == "textarea") {
+          init(event);
+        }
+      });
+    }
+    unsafeWindow.addEventListener("load", onLoad, false);
+  }
+
+  document.addEventListener("DOMContentLoaded", addEventListeners, false);
 })();
