@@ -25,25 +25,17 @@
     return !!pattern.test(str);
   }
 
-  function init(event) {
-    function pasteHandler(item) {
-      var link = event.clipboardData.getData("text/plain");
-      var isURL = isValidURL(link);
-      if (isURL) {
-        event.preventDefault();
-        item.value += "[" + link + "](" + link + ")";
-      }
-    }
-    var items = document.querySelectorAll("textarea.TextArea");
-    items.forEach(pasteHandler);
-  }
-
   function addEventListeners() {
     function onLoad() {
       document.body.addEventListener("paste", function(event) {
         var target = event.target ? event.target : event.srcElement;
         if (target && target.nodeName.toLowerCase() == "textarea") {
-          init(event);
+          var link = event.clipboardData.getData("text/plain");
+          var isURL = isValidURL(link);
+          if (isURL) {
+            event.preventDefault();
+            target.value += "[" + link + "](" + link + ")";
+          }
         }
       });
     }
