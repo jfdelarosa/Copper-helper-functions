@@ -49,6 +49,7 @@
         var el = isTextarea(e);
         if (el.isValid) {
           var link = e.clipboardData.getData("text/plain");
+          link = link.replace(/\s+/g, '');
           if (isValidURL(link)) {
             insertText(el.target, "[" + link + "](" + link + ")")
             e.preventDefault();
