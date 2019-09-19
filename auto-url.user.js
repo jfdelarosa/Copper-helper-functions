@@ -31,6 +31,7 @@
         var target = event.target ? event.target : event.srcElement;
         if (target && target.nodeName.toLowerCase() == "textarea") {
           var link = event.clipboardData.getData("text/plain");
+          link = link.replace(/\s+/g, '');
           var isURL = isValidURL(link);
           if (isURL) {
             event.preventDefault();
