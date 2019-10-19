@@ -5,7 +5,7 @@
 // @run-at       document-end
 // @description  Changes the default colors on the QuestionPro's dashboard
 // @author       jfdelarosa
-// @match        https://www.questionpro.com/a/showVOCDashboardII.do*
+// @match        https://www.questionpro.com/t/*
 // @grant        GM_log
 // ==/UserScript==
 
@@ -17,15 +17,25 @@
 
   function addEventListeners() {
     function onLoad() {
-      let allSeries = document.querySelectorAll(
-        "#dashboardQuestionChartsID .highcharts-series path"
-      );
-      allSeries.forEach((item, index) => {
-        let color = defaultColor;
-        if (index + 1 <= colors.length) {
-          color = colors[index];
-        }
-        item.setAttribute("fill", color);
+      document.querySelectorAll(".highcharts-series").forEach(item => {
+        item.querySelectorAll("path").forEach((i, j) => {
+          let color = defaultColor;
+          if (j + 1 <= colors.length) {
+            color = colors[j];
+          }
+          i.setAttribute("fill", color);
+        });
+      });
+      document.querySelectorAll(".dashboard-table-data").forEach(table => {
+        table
+          .querySelectorAll('td[height="14"]:first-child')
+          .forEach((item, index) => {
+            let color = defaultColor;
+            if (index + 1 <= colors.length) {
+              color = colors[index];
+            }
+            item.style.backgroundColor = color;
+          });
       });
     }
     unsafeWindow.addEventListener("load", onLoad, false);
